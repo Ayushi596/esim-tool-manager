@@ -27,14 +27,14 @@ A Python-based command-line tool to automate the **installation, configuration, 
 
 ## Installation & Setup
 
-### Step 1 — Clone the repository
+### Step 1 - Clone the repository
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/esim-tool-manager.git
 cd esim-tool-manager
 ```
 
-### Step 2 — (Optional) Create a virtual environment
+### Step 2 - (Optional) Create a virtual environment
 
 ```bash
 python -m venv venv
@@ -42,13 +42,13 @@ venv\Scripts\activate     # On Windows
 source venv/bin/activate  # On Linux/macOS
 ```
 
-### Step 3 — Install dependencies
+### Step 3 - Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Step 4 — Run the tool
+### Step 4 - Run the tool
 
 ```bash
 python main.py
