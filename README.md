@@ -161,5 +161,5 @@ All actions are logged automatically:
 ## Author
 
 Ayushi
-Developed as a screening task for **eSim Summer Fellowship 2026**
+- Developed as a screening task for **eSim Summer Fellowship 2026**
 FOSSEE Project, IIT Bombay
