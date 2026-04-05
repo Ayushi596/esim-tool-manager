@@ -1,6 +1,6 @@
 # Design Document: eSim Automated Tool Manager
 
-**Project:** eSim Summer Fellowship 2026 — Screening Task 5
+**Project:** eSim Summer Fellowship 2026 - Screening Task 5
 **Tool:** eSim Automated Tool Manager
 **Version:** 1.0.0
 **Author:** Ayushi
@@ -12,7 +12,7 @@
 
 The **eSim Automated Tool Manager** is a Python-based command-line application designed to automate the installation, configuration, dependency management, and update tracking of all external tools and libraries required by the eSim EDA platform developed at FOSSEE, IIT Bombay.
 
-Managing eSim's external dependencies manually—across multiple operating systems and versions—is error-prone and time-consuming. This tool eliminates that friction by providing a unified, menu-driven interface to handle all tool management tasks in one place.
+Managing eSim's external dependencies manually across multiple operating systems and versions is error-prone and time-consuming. This tool eliminates that friction by providing a unified, menu-driven interface to handle all tool management tasks in one place.
 
 ---
 
@@ -59,76 +59,76 @@ The application follows a **modular architecture** where each functional area is
 
 ## 4. Module Breakdown
 
-### 4.1 `main.py` — Entry Point & Menu Controller
+### 4.1 `main.py` - Entry Point & Menu Controller
 
 **Responsibility:** Orchestrates the entire application. Renders the CLI menu. Routes user choices to appropriate module functions.
 
 **Key Functions:**
-- `print_banner()` — Displays the application header
-- `print_main_menu()` — Renders the main menu
-- `main()` — Main event loop handling user input
-- `configuration_menu()` — Sub-menu for config options
-- `installer_menu()` — Sub-menu for installation options
-- `view_log()` — Displays recent activity log
-- `show_system_info()` — Shows OS and runtime details
+- `print_banner()` - Displays the application header
+- `print_main_menu()` - Renders the main menu
+- `main()` - Main event loop handling user input
+- `configuration_menu()` - Sub-menu for config options
+- `installer_menu()` - Sub-menu for installation options
+- `view_log()` - Displays recent activity log
+- `show_system_info()` - Shows OS and runtime details
 
 **Design Decisions:**
-- Uses a `while True` loop with `input()` for the interactive menu — simple, cross-platform, no external dependencies
+- Uses a `while True` loop with `input()` for the interactive menu: simple, cross-platform, no external dependencies
 - Calls `os.system("cls")` to clear screen between menus for a clean UX
 
 ---
 
-### 4.2 `dependency_checker.py` — Dependency Checker
+### 4.2 `dependency_checker.py` - Dependency Checker
 
 **Responsibility:** Verifies that all required system tools and Python libraries are present and functional.
 
 **Key Functions:**
-- `check_system_tools()` — Scans PATH for ngspice, kicad, git, java, python, pip
-- `check_python_libraries()` — Uses `importlib.import_module()` to test each library
-- `install_missing_libraries()` — Auto-installs missing pip packages
-- `run_full_check()` — Runs both checks and prints a summary
+- `check_system_tools()` - Scans PATH for ngspice, kicad, git, java, python, pip
+- `check_python_libraries()` - Uses `importlib.import_module()` to test each library
+- `install_missing_libraries()` - Auto-installs missing pip packages
+- `run_full_check()` - Runs both checks and prints a summary
 
 **Data Structures:**
-- `SYSTEM_TOOLS` — List of dicts: `{name, version_flag, description, install_hint, critical}`
-- `PYTHON_LIBRARIES` — List of dicts: `{import_name, pip_name, description}`
+- `SYSTEM_TOOLS` - List of dicts: `{name, version_flag, description, install_hint, critical}`
+- `PYTHON_LIBRARIES` - List of dicts: `{import_name, pip_name, description}`
 
 **Design Decisions:**
-- Uses `importlib.import_module()` instead of `pip show` for library checks — more reliable, doesn't require subprocess
+- Uses `importlib.import_module()` instead of `pip show` for library checks - more reliable, doesn't require subprocess
 - Critical tools are flagged separately for prominence in output
 - Auto-install only offered for pip packages (not binary installers, which require OS-level permissions)
 
 ---
 
-### 4.3 `installer.py` — Tool Installation Management
+### 4.3 `installer.py` - Tool Installation Management
 
 **Responsibility:** Manages the installation of all external tools required by eSim.
 
 **Key Functions:**
-- `list_tools()` — Shows all tools with install status
-- `install_tool_menu()` — Interactive menu to pick a tool to install
-- `install_single_tool(tool)` — Installs one tool (pip or browser-guided)
-- `install_all_pip_packages()` — Batch installs all Python packages
+- `list_tools()` - Shows all tools with install status
+- `install_tool_menu()` - Interactive menu to pick a tool to install
+- `install_single_tool(tool)` - Installs one tool (pip or browser-guided)
+- `install_all_pip_packages()` - Batch installs all Python packages
 
 **Data Structures:**
-- `INSTALLABLE_TOOLS` — Registry of all tools with: `{id, name, display_name, description, download_url, pip_package, windows_note, critical}`
+- `INSTALLABLE_TOOLS` - Registry of all tools with: `{id, name, display_name, description, download_url, pip_package, windows_note, critical}`
 
 **Design Decisions:**
-- Binary tools (Ngspice, KiCad) cannot be silently installed on Windows without admin privileges and complex OS interaction. Instead, the tool opens the official download page in the user's default browser — this is both safe and user-friendly.
+- Binary tools (Ngspice, KiCad) cannot be silently installed on Windows without admin privileges and complex OS interaction. Instead, the tool opens the official download page in the user's default browser - this is both safe and user-friendly.
 - Python pip packages are installed fully automatically using `subprocess` calling `pip`
 
 ---
 
-### 4.4 `updater.py` — Update & Upgrade System
+### 4.4 `updater.py` - Update & Upgrade System
 
 **Responsibility:** Checks for available updates for tracked tools and Python packages. Applies upgrades with user confirmation.
 
 **Key Functions:**
-- `get_latest_pip_version(package)` — Queries PyPI JSON API for latest version
-- `get_installed_pip_version(package)` — Runs `pip show` to find installed version
-- `check_pip_updates()` — Compares installed vs. latest for all tracked packages
-- `check_system_tool_versions()` — Displays current system tool versions
-- `upgrade_pip_packages(packages)` — Runs `pip install --upgrade` for a list
-- `run_update_menu()` — Full update workflow with upgrade prompt
+- `get_latest_pip_version(package)` - Queries PyPI JSON API for latest version
+- `get_installed_pip_version(package)` - Runs `pip show` to find installed version
+- `check_pip_updates()` - Compares installed vs. latest for all tracked packages
+- `check_system_tool_versions()` - Displays current system tool versions
+- `upgrade_pip_packages(packages)` - Runs `pip install --upgrade` for a list
+- `run_update_menu()` - Full update workflow with upgrade prompt
 
 **External API Used:**
 - PyPI JSON API: `https://pypi.org/pypi/{package}/json`
@@ -140,16 +140,16 @@ The application follows a **modular architecture** where each functional area is
 
 ---
 
-### 4.5 `config_handler.py` — Configuration Handling
+### 4.5 `config_handler.py` - Configuration Handling
 
 **Responsibility:** Stores and manages user settings persistently using a JSON file. Handles tool paths and environment variable configuration.
 
 **Key Functions:**
-- `load_config()` — Reads `config/settings.json`; creates default if missing
-- `save_config(config)` — Writes config to JSON with timestamp
-- `view_config()` — Pretty-prints current configuration
-- `update_config()` — Interactive menu to edit individual settings
-- `set_environment_variables()` — Sets env vars for current process session
+- `load_config()` - Reads `config/settings.json`; creates default if missing
+- `save_config(config)` - Writes config to JSON with timestamp
+- `view_config()` - Pretty-prints current configuration
+- `update_config()` - Interactive menu to edit individual settings
+- `set_environment_variables()` - Sets env vars for current process session
 
 **Storage Format:** `config/settings.json`
 ```json
@@ -171,7 +171,7 @@ The application follows a **modular architecture** where each functional area is
 
 ---
 
-### 4.6 `logger.py` — Centralized Logging
+### 4.6 `logger.py` - Centralized Logging
 
 **Responsibility:** Provides a single shared logger used by all modules.
 
@@ -183,17 +183,17 @@ The application follows a **modular architecture** where each functional area is
 
 ---
 
-### 4.7 `utils.py` — Shared Helper Functions
+### 4.7 `utils.py` - Shared Helper Functions
 
 **Responsibility:** Provides reusable utility functions to avoid code duplication.
 
 **Key Functions:**
-- `get_os()` — Returns OS identifier string
-- `is_tool_installed(name)` — Checks PATH using `shutil.which()`
-- `run_command(command, description)` — Runs subprocess with error handling
-- `get_tool_version(tool, flag)` — Gets version string of a tool
-- `print_header()`, `print_separator()` — Terminal UI formatting
-- `confirm_action(prompt)` — Y/N confirmation prompt
+- `get_os()` - Returns OS identifier string
+- `is_tool_installed(name)` - Checks PATH using `shutil.which()`
+- `run_command(command, description)` - Runs subprocess with error handling
+- `get_tool_version(tool, flag)` - Gets version string of a tool
+- `print_header()`, `print_separator()` - Terminal UI formatting
+- `confirm_action(prompt)` - Y/N confirmation prompt
 
 ---
 
@@ -259,10 +259,10 @@ The tool uses `platform.system()` to detect OS and adapts behavior accordingly.
 
 1. **GUI Version** using `tkinter` or `PyQt5`
 2. **Linux apt/pacman support** for auto-installing system binaries
-3. **eSim version manager** — switch between eSim 2.3 / 2.4 / 2.5
-4. **Plugin system** — allow community modules for new tools
-5. **Scheduled update checks** — run in background on system startup
-6. **Docker integration** — spin up an isolated eSim environment
+3. **eSim version manager** - switch between eSim 2.3 / 2.4 / 2.5
+4. **Plugin system** - allow community modules for new tools
+5. **Scheduled update checks** - run in background on system startup
+6. **Docker integration** - spin up an isolated eSim environment
 
 ---
 
