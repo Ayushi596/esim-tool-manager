@@ -137,11 +137,11 @@ esim-tool-manager/
 ## Supported Tools
 
 ### System Tools
-- **Ngspice** — SPICE circuit simulator (core eSim dependency)
-- **KiCad** — EDA tool for schematic and PCB design
-- **Git** — Version control
-- **Java JDK** — Required by some eSim modules
-- **Python 3.10+** — Required runtime
+- **Ngspice** - SPICE circuit simulator (core eSim dependency)
+- **KiCad** - EDA tool for schematic and PCB design
+- **Git** - Version control
+- **Java JDK** - Required by some eSim modules
+- **Python 3.10+** - Required runtime
 
 ### Python Libraries
 - `requests`, `psutil`, `colorama`, `packaging`
