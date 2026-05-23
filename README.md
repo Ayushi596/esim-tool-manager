@@ -30,7 +30,7 @@ A Python-based command-line tool to automate the **installation, configuration, 
 ### Step 1 - Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/esim-tool-manager.git
+git clone https://github.com/Ayushi596/esim-tool-manager.git
 cd esim-tool-manager
 ```
 
